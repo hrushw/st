@@ -2181,12 +2181,20 @@ main(int argc, char *argv[])
 	xw.isfixed = False;
 	xsetcursor(cursorshape);
 
+	int alphafocusset = 0;
+
 	ARGBEGIN {
 	case 'a':
 		allowaltscreen = 0;
 		break;
 	case 'A':
-		alpha = strtof(EARGF(usage()), NULL);
+		/* ugly hack to allow setting both focused and unfocused alphas at runtime */
+		if(alphafocusset) {
+			alphaUnfocused = strtof(EARGF(usage()), NULL);
+		} else {
+			alphaFocused = strtof(EARGF(usage()), NULL);
+			alphafocusset = 1;
+		}
 		LIMIT(alpha, 0.0, 1.0);
 		break;
 	case 'c':
