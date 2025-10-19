@@ -1528,7 +1528,7 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 	}
 
 	if (IS_TRUECOL(base.bg)) {
-		colbg.alpha = 0xffff;
+		colbg.alpha = 0xffff * alpha;
 		colbg.green = TRUEGREEN(base.bg);
 		colbg.red = TRUERED(base.bg);
 		colbg.blue = TRUEBLUE(base.bg);
@@ -1536,6 +1536,9 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 		bg = &truebg;
 	} else {
 		bg = &dc.col[base.bg];
+		bg->color.alpha = (unsigned short)(0xffff * alpha);
+		bg->pixel &= 0x00FFFFFF;
+		bg->pixel |= (unsigned char)(0xff * alpha) << 24;
 	}
 
 	/* Change basic system colors [0-7] to bright system colors [8-15] */
@@ -1557,11 +1560,14 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 
 		if (bg == &dc.col[defaultbg]) {
 			bg = &dc.col[defaultfg];
+			bg->color.alpha = (unsigned short)(0xffff * alpha);
+			bg->pixel &= 0x00FFFFFF;
+			bg->pixel |= (unsigned char)(0xff * alpha) << 24;
 		} else {
 			colbg.red = ~bg->color.red;
 			colbg.green = ~bg->color.green;
 			colbg.blue = ~bg->color.blue;
-			colbg.alpha = bg->color.alpha;
+			colbg.alpha = bg->color.alpha * alpha;
 			XftColorAllocValue(xw.dpy, xw.vis, xw.cmap, &colbg,
 					&revbg);
 			bg = &revbg;
