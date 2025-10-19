@@ -63,6 +63,8 @@ static void ttysend(const Arg *);
 /* config.h for applying patches and the configuration. */
 #include "config.h"
 
+float alpha;
+
 /* XEMBED messages */
 #define XEMBED_FOCUS_IN  4
 #define XEMBED_FOCUS_OUT 5
@@ -1246,6 +1248,8 @@ xinit(int cols, int rows)
 	XWindowAttributes attr;
 	XVisualInfo vis;
 
+	alpha = alphaFocused;
+
 	if (!(xw.dpy = XOpenDisplay(NULL)))
 		die("can't open display\n");
 	xw.scr = XDefaultScreen(xw.dpy);
@@ -1909,6 +1913,7 @@ focus(XEvent *ev)
 		return;
 
 	if (ev->type == FocusIn) {
+		alpha = alphaFocused;
 		if (xw.ime.xic)
 			XSetICFocus(xw.ime.xic);
 		win.mode |= MODE_FOCUSED;
@@ -1916,12 +1921,16 @@ focus(XEvent *ev)
 		if (IS_SET(MODE_FOCUS))
 			ttywrite("\033[I", 3, 0);
 	} else {
+		alpha = alphaUnfocused;
 		if (xw.ime.xic)
 			XUnsetICFocus(xw.ime.xic);
 		win.mode &= ~MODE_FOCUSED;
 		if (IS_SET(MODE_FOCUS))
 			ttywrite("\033[O", 3, 0);
 	}
+
+	xloadcols();
+	tfulldirt();
 }
 
 int
