@@ -5,11 +5,12 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "JetBrainsMono Nerd Font:pixelsize=20:antialias=true:autohint=true";
+static char *font = "Terminus:pixelsize=24:antialias=true:autohint=true";
 /* Spare fonts */
 static char *font2[] = {
 /*	"Inconsolata for Powerline:pixelsize=12:antialias=true:autohint=true", */
 /*	"Hack Nerd Font Mono:pixelsize=11:antialias=true:autohint=true", */
+	"JetBrainsMono Nerd Font:pixelsize=20:antialias=true:autohint=true",
 	"Symbols Nerd Font Mono:pixelsize=20:antialias=true:autohint=true",
 };
 
@@ -101,7 +102,7 @@ char *termname = "st-256color";
 unsigned int tabspaces = 8;
 
 /* bg opacity */
-float alphaFocused = 0.75, alphaUnfocused = 0.5;
+float alphaFocused = 0.8, alphaUnfocused = 0.6;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
