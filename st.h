@@ -83,6 +83,7 @@ void redraw(void);
 void tfulldirt(void);
 void draw(void);
 
+void iso14755(const Arg *);
 void printscreen(const Arg *);
 void printsel(const Arg *);
 void sendbreak(const Arg *);
@@ -127,3 +128,4 @@ extern unsigned int tabspaces;
 extern unsigned int defaultfg;
 extern unsigned int defaultbg;
 extern unsigned int defaultcs;
+extern char *iso14755_cmd;
