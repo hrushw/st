@@ -100,6 +100,8 @@ char *termname = "st-256color";
 unsigned int tabspaces = 8;
 
 /* bg opacity */
+const char* alphaFocusedStr="0.8";
+const char* alphaUnfocusedStr="0.6";
 float alphaFocused = 0.8, alphaUnfocused = 0.6;
 
 /* Terminal colors (16 first used in escape sequence) */
@@ -209,6 +211,8 @@ ResourcePref resources[] = {
 		{ "color15",      STRING,  &colorname[15] },
 		{ "background",   STRING,  &colorname[259] },
 		{ "foreground",   STRING,  &colorname[258] },
+		{ "alphaFoc",     STRING,  &alphaFocusedStr },
+		{ "alphaUnfoc",   STRING,  &alphaUnfocusedStr },
 		{ "cursorColor",  STRING,  &colorname[256] },
 		{ "termname",     STRING,  &termname },
 		{ "shell",        STRING,  &shell },

@@ -1273,6 +1273,12 @@ xinit(int cols, int rows)
 	XWindowAttributes attr;
 	XVisualInfo vis;
 
+	alphaFocused = strtof(alphaFocusedStr, NULL);
+	alphaUnfocused = strtof(alphaUnfocusedStr, NULL);
+	if(
+		alphaFocused < 0.0f || alphaFocused > 1.0f ||
+		alphaUnfocused < 0.0f || alphaUnfocused > 1.0f
+	) die("failed to read alpha value\n");
 	alpha = alphaFocused;
 
 	if (!(xw.dpy = XOpenDisplay(NULL)))
